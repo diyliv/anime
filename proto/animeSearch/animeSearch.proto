@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package search;
+option go_package="searchpb";
+
+import "google/protobuf/wrappers.proto";
+
+service SearchService {
+    rpc Search(google.protobuf.StringValue) returns (FinSearchResp){};
+}
+
+message Images {
+    string imageUrl = 1;
+    string smallImageUrl = 2;
+    string largeImageUrl = 3;
+}
+
+message YoutubeTrailerImages {
+    string imageUrl = 1;
+    string smallImageUrl = 2;
+    string mediumImageUrl = 3;
+    string largeImageUrl = 4;
+    string maximumImageUrl = 5;
+}
+
+message Trailer {
+    string youtubeID = 1;
+    string youtubeTrailerURL = 2;
+    YoutubeTrailerImages youtubeTrailerImages = 3;
+
+}
+
+message AnimeSearch {
+    int64 malId = 1;
+    string url = 2;
+    Images jpgImages = 3;
+    Trailer youtubeTrailer = 4;
+    string title = 5;
+    string titleEng = 6;
+    string type = 7;
+    string source = 8;
+    int64 episodes = 9;
+    string status = 10;
+    string rating = 11;
+    float score = 12;
+    int64 year = 13;
+}
+
+message SearchResponse {
+    AnimeSearch searchResponse = 1;
+}
+
+message FinSearchResp {
+    repeated SearchResponse finresp = 1;
+}
