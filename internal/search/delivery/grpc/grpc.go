@@ -36,6 +36,10 @@ func (s *searchService) Search(ctx context.Context, r *wrappers.StringValue) (*s
 		s.logger.Error("Error while dialing with API: " + err.Error())
 	}
 
+	if resp.StatusCode == 400 {
+		return nil, nil
+	}
+
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
