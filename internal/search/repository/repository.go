@@ -4,15 +4,15 @@ import (
 	"database/sql"
 
 	"github.com/diyliv/anime/internal/models"
-	"github.com/diyliv/anime/pkg/logger"
+	"go.uber.org/zap"
 )
 
 type animeRepo struct {
 	psqlDB sql.DB
-	logger *logger.Logger
+	logger *zap.Logger
 }
 
-func NewAnimeRepo(psqlDB sql.DB, logger *logger.Logger) *animeRepo {
+func NewAnimeRepo(psqlDB sql.DB, logger *zap.Logger) *animeRepo {
 	return &animeRepo{psqlDB: psqlDB, logger: logger}
 }
 

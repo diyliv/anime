@@ -9,7 +9,7 @@ import (
 
 func main() {
 	psqlDB := postgres.InitPsqlDB()
-	logger := logger.NewLogger(logger.InitLogger())
+	logger := logger.InitLogger()
 	configs := configs.ReadConfig()
 
 	server := server.NewServer(*psqlDB, logger, configs)

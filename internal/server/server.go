@@ -11,18 +11,18 @@ import (
 	searchService "github.com/diyliv/anime/internal/search/delivery/grpc"
 	"github.com/diyliv/anime/internal/search/repository"
 	"github.com/diyliv/anime/internal/search/usecase"
-	"github.com/diyliv/anime/pkg/logger"
 	searchpb "github.com/diyliv/anime/proto/animeSearch"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
 type server struct {
 	psqlDB  sql.DB
-	logger  *logger.Logger
+	logger  *zap.Logger
 	configs *configs.Config
 }
 
-func NewServer(psqlDB sql.DB, logger *logger.Logger, configs *configs.Config) *server {
+func NewServer(psqlDB sql.DB, logger *zap.Logger, configs *configs.Config) *server {
 	return &server{psqlDB: psqlDB, logger: logger, configs: configs}
 }
 

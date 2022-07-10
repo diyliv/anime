@@ -1,25 +1,28 @@
 package logger
 
 import (
+	"os"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
+var logger *zap.Logger
+
 func InitLogger() *zap.Logger {
-	var err error
+	config := zap.NewProductionEncoderConfig()
+	config.EncodeTime = zapcore.ISO8601TimeEncoder
+	fileEncoder := zapcore.NewJSONEncoder(config)
+	consoleEncoder := zapcore.NewConsoleEncoder(config)
+	logFile, _ := os.OpenFile("log.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	writer := zapcore.AddSync(logFile)
+	defaultLogLevel := zapcore.DebugLevel
+	core := zapcore.NewTee(
+		zapcore.NewCore(fileEncoder, writer, defaultLogLevel),
+		zapcore.NewCore(consoleEncoder, zapcore.AddSync(os.Stdout), defaultLogLevel),
+	)
 
-	config := zap.NewProductionConfig()
+	logger = zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel))
 
-	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.TimeKey = "timestamp"
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	encoderConfig.StacktraceKey = ""
-	config.EncoderConfig = encoderConfig
-
-	l, err := config.Build(zap.AddCallerSkip(1))
-	if err != nil {
-		panic(err)
-	}
-
-	return l
+	return logger
 }

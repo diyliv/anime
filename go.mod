@@ -7,8 +7,8 @@ require (
 	github.com/lib/pq v1.10.6
 	github.com/spf13/viper v1.12.0
 	go.uber.org/zap v1.21.0
-	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2
-	google.golang.org/grpc v1.46.2
+	golang.org/x/net v0.0.0-20220708220712-1185a9018129
+	google.golang.org/grpc v1.47.0
 )
 
 require (

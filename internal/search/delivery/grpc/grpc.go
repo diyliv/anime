@@ -10,17 +10,17 @@ import (
 
 	"github.com/diyliv/anime/internal/models"
 	"github.com/diyliv/anime/internal/search"
-	"github.com/diyliv/anime/pkg/logger"
 	searchpb "github.com/diyliv/anime/proto/animeSearch"
 	"github.com/golang/protobuf/ptypes/wrappers"
+	"go.uber.org/zap"
 )
 
 type searchService struct {
-	logger   *logger.Logger
+	logger   *zap.Logger
 	searchUC search.UseCase
 }
 
-func NewSearchService(logger *logger.Logger, searchUC search.UseCase) *searchService {
+func NewSearchService(logger *zap.Logger, searchUC search.UseCase) *searchService {
 	return &searchService{logger: logger, searchUC: searchUC}
 }
 
